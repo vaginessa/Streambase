@@ -45,7 +45,7 @@ public class SzukajWatchfree extends AppCompatActivity {
         poleSzukania.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH && poleSzukania.getText().toString().trim().length() > 0) {
                     szukaj = poleSzukania.getText().toString();
                     wyniki = new HashMap<>();
                     strona = 1;
