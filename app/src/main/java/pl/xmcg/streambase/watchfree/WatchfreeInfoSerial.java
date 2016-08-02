@@ -16,6 +16,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import pl.xmcg.streambase.Callback;
 import pl.xmcg.streambase.R;
@@ -25,6 +26,7 @@ public class WatchfreeInfoSerial extends AppCompatActivity {
 
     public static final int WYBIERZ_SEZON = 0, WYBIERZ_ODCINEK = 1, WYBIERZ_HOSTER = 2;
     private ListView listView;
+    private HashMap<String, String> odcinekLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class WatchfreeInfoSerial extends AppCompatActivity {
         final String sezon = getIntent().getStringExtra("Sezon");
         final String odcinek = getIntent().getStringExtra("Odcinek");
         setTitle("TV Show: " + nazwa + (sezon != null ? " [" + sezon + "]" : ""));
+        odcinekLink = new HashMap<>();
         listView = (ListView) findViewById(R.id.listViewSerialWatchfree);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -90,8 +93,9 @@ public class WatchfreeInfoSerial extends AppCompatActivity {
                         if (element.text().equals(sezon)) break;
                     }
                     String id = szukany.attr("data-id");
-                    Elements odcinki = dokument.getElementsByAttributeValue("data-id", id);
-                    System.out.println(odcinki.size());
+                    Elements tencoszukam = dokument.getElementsByAttributeValue("data-id", id);
+                    Element odcinki = tencoszukam.last();
+
                 }
             }
 
