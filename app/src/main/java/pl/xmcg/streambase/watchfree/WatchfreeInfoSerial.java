@@ -96,8 +96,17 @@ public class WatchfreeInfoSerial extends AppCompatActivity {
                     Elements tencoszukam = dokument.getElementsByAttributeValue("data-id", id);
                     Element odcinki = tencoszukam.last();
                     for (Element odc : odcinki.getElementsByAttributeValue("class", "tv_episode_item")) {
-                        
+                        String url = "http://watchfree.to" + odc.getAllElements().first().attr("href");
+                        String nazwaOdcinku = odc.getAllElements().first().text();
+                        odcinekLink.put(nazwaOdcinku, url);
                     }
+                    final ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), R.layout.listview_text_layout, new ArrayList(odcinekLink.keySet()));
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            listView.setAdapter(adapter);
+                        }
+                    });
                 }
             }
 
