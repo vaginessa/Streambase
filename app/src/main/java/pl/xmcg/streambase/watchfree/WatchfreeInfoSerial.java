@@ -16,6 +16,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import pl.xmcg.streambase.Callback;
@@ -98,9 +100,18 @@ public class WatchfreeInfoSerial extends AppCompatActivity {
                     for (Element odc : odcinki.getElementsByAttributeValue("class", "tv_episode_item")) {
                         String url = "http://watchfree.to" + odc.getAllElements().first().attr("href");
                         String nazwaOdcinku = odc.getAllElements().first().text();
-                        odcinekLink.put(nazwaOdcinku, url);
+                        odcinekLink.put(nazwaOdcinku.split("-")[0].trim(), url);
                     }
-                    final ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), R.layout.listview_text_layout, new ArrayList(odcinekLink.keySet()));
+                    ArrayList lista = new ArrayList(odcinekLink.keySet());
+                    Collections.sort(lista, new Comparator() {
+                        @Override
+                        public int compare(Object lhs, Object rhs) {
+                            int i1 = Integer.valueOf(lhs.toString().split(" ")[0].trim().substring(1));
+                            int i2 = Integer.valueOf(rhs.toString().split(" ")[0].trim().substring(1));
+                            return i1 - i2;
+                        }
+                    });
+                    final ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), R.layout.listview_text_layout, lista);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
