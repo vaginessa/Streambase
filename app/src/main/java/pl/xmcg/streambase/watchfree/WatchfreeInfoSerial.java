@@ -109,7 +109,7 @@ public class WatchfreeInfoSerial extends AppCompatActivity {
                             int i1 = Integer.valueOf(lhs.toString().split(" ")[0].trim().substring(1));
                             int i2 = Integer.valueOf(rhs.toString().split(" ")[0].trim().substring(1));
                             return i1 - i2;
-                        }
+
                     });
                     final ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), R.layout.listview_text_layout, lista);
                     runOnUiThread(new Runnable() {
