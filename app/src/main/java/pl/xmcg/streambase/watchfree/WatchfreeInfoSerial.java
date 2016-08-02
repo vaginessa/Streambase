@@ -89,9 +89,9 @@ public class WatchfreeInfoSerial extends AppCompatActivity {
                         szukany = element;
                         if (element.text().equals(sezon)) break;
                     }
-                    int id = Integer.valueOf(szukany.attr("data-id"));
-                    
-
+                    String id = szukany.attr("data-id");
+                    Elements odcinki = dokument.getElementsByAttributeValue("data-id", id);
+                    System.out.println(odcinki.size());
                 }
             }
 
