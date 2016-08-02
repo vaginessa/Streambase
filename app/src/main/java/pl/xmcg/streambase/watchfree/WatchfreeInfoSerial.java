@@ -95,7 +95,9 @@ public class WatchfreeInfoSerial extends AppCompatActivity {
                     String id = szukany.attr("data-id");
                     Elements tencoszukam = dokument.getElementsByAttributeValue("data-id", id);
                     Element odcinki = tencoszukam.last();
-
+                    for (Element odc : odcinki.getElementsByAttributeValue("class", "tv_episode_item")) {
+                        
+                    }
                 }
             }
 
