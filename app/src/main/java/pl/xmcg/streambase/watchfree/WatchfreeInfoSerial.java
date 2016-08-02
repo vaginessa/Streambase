@@ -2,6 +2,7 @@ package pl.xmcg.streambase.watchfree;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -54,6 +55,10 @@ public class WatchfreeInfoSerial extends AppCompatActivity {
                     intent.putExtra("Sezon", nazwaSezon);
                     startActivity(intent);
                 }
+                if (tryb == WYBIERZ_ODCINEK) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(odcinekLink.get(nazwaSezon)));
+                    startActivity(intent);
+                }
             }
         });
         Util.pobierzStrone(this, url, "Please wait", "Downloading data...", false, new Callback() {
@@ -98,8 +103,8 @@ public class WatchfreeInfoSerial extends AppCompatActivity {
                     Elements tencoszukam = dokument.getElementsByAttributeValue("data-id", id);
                     Element odcinki = tencoszukam.last();
                     for (Element odc : odcinki.getElementsByAttributeValue("class", "tv_episode_item")) {
-                        String url = "http://watchfree.to" + odc.getAllElements().first().attr("href");
-                        String nazwaOdcinku = odc.getAllElements().first().text();
+                        String url = "http://watchfree.to" + odc.getElementsByTag("a").attr("href");
+                        String nazwaOdcinku = odc.text();
                         odcinekLink.put(nazwaOdcinku.split("-")[0].trim(), url);
                     }
                     ArrayList lista = new ArrayList(odcinekLink.keySet());
@@ -109,7 +114,7 @@ public class WatchfreeInfoSerial extends AppCompatActivity {
                             int i1 = Integer.valueOf(lhs.toString().split(" ")[0].trim().substring(1));
                             int i2 = Integer.valueOf(rhs.toString().split(" ")[0].trim().substring(1));
                             return i1 - i2;
-
+                        }
                     });
                     final ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), R.layout.listview_text_layout, lista);
                     runOnUiThread(new Runnable() {
